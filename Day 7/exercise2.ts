@@ -26,7 +26,7 @@ function main(input: string) {
   });
 
   const count = traverse("shiny gold", map, 1);
-  console.log("Count: ", count);
+  console.log("Count: ", count - 1);
 }
 
 function traverse(
@@ -35,11 +35,13 @@ function traverse(
   count: number
 ): number {
   const newTerms = map.get(term);
-  if (newTerms === null || newTerms === undefined) return count;
+  if (newTerms === null || newTerms === undefined) {
+    return count;
+  }
 
-  let totalCount = 1;
-  newTerms.forEach((newTerm) => {
+  let totalCount = 0;
+  newTerms.forEach((newTerm, i) => {
     totalCount += count * traverse(newTerm.name, map, newTerm.count);
   });
-  return totalCount;
+  return count + totalCount;
 }
